@@ -40,4 +40,4 @@ for (ds in names(tmpList)){
 usethis::use_r("cell_cycle")
 
 devtools::document()
-
+devtools::check()
