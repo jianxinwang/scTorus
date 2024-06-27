@@ -10,5 +10,9 @@
 #'   \item{`Nucleus CCNE Mean`}{dbl denoting scanned intensity for nucleus Cyclin E1}
 #'   \item{`...`}{dbl Other markers...}
 #' }
-
-"cell_cycle_cc2_1"
+#' 
+#' @source Test dataset from lab
+#'
+#' @examples
+#' data(cell_cycle)
+"cell_cycle"
