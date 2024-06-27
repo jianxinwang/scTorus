@@ -13,8 +13,8 @@ data.bcm.cc2.09.1 <- fread("Consolidated_data_BCM09-1.txt")
 data.bcm.cc2.10.2 <- fread("Consolidated_data_BCM10-2.txt")
 
 tmpList <- list()
-tmpList[['bcm.cc2.09.1']] <- data.bcm.cc2.09.1
-tmpList[['bcm.cc2.10.2']] <- data.bcm.cc2.10.2
+tmpList[['cell_cycle_cc2_1']] <- data.bcm.cc2.09.1
+tmpList[['cell_cycle_cc2_2']] <- data.bcm.cc2.10.2
 
 dataSetList <- list()
 getwd()
@@ -25,7 +25,7 @@ for (ds in names(tmpList)){
     
     # get the mean value columns
     tmp <- tmp %>% dplyr::select(contains(c('Sample Name', 'Cell ID', 'Mean'))) %>% 
-        dplyr::select(-contains(c('AE1AE3', 'Autofluorescence', 'Entire', 'Membrane', 'Cytoplasm')))
+        dplyr::select(-contains(c('AE1AE3', 'Autofluorescence', 'DAPI', 'Entire', 'Membrane', 'Cytoplasm')))
 
     
     # clean column names
@@ -37,6 +37,6 @@ for (ds in names(tmpList)){
 }
 
 
+usethis::use_r("cell_cycle_cc2_1")
 
-
-
+devtools::document()
