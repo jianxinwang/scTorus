@@ -1,0 +1,17 @@
+Package: scTorus
+Type: Package
+Title: Arrange Cells along a Pseudo Time
+Version: 0.1.0
+Author: Jianxin Wang
+Maintainer: Jianxin Wang <jianxinwang24@gmail.com>
+Description: This tool takes a single cell data frame (scRNA-Seq or Vectra, etc) and arrange cells along a pseudo time line. It project ggplot2 plotting objects that can be used to make three plots
+    A scatterplot showing cells arranged along a circle
+    A heatmap showing the cell cycle marker expression levels or intensities
+    A trajectory profile plot showing the dynamics of various cell cycle markers along the pseudo time line.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Imports:
+	data.table (>= 1.9.4),
+	dplyr
