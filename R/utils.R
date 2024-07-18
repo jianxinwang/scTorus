@@ -2,16 +2,16 @@
 #
 # Utility functions for scTorus
 
-
 smoothByWindow <- function(x){
-    res <- NULL
+	    res <- NULL
+    
+    # pad 50 data points on each end of x
     y <- c(x[(length(x) - 50):length(x)], x, x[1:50])
-
-    for (i in 1:(length(x))){
-        new.i <- mean(y[i:(i + 100)])
-        res <- c(res, new.i)
-    }
-    res
+	    
+	    res <- lapply(1:length(x), function(x) mean(y[x:(x+100)]))
+	    res <- unlist(res)
+		    
+		    res
 }
 
 smoothByLowess <- function(x){

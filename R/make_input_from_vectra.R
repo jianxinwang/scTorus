@@ -15,33 +15,37 @@
 make_input_from_vectra <- function(infile, tissue_category = c('Tumor', 'Stroma'),
                                    compartment = c('Nucleus', 'Entire.Cell', 'Cytoplasm'),
                                    excluded_markers = c('AE1AE3', 'DAPI')){
-
+    
     dat <- data.table::fread(infile)
-
     dat <- as.data.frame(dat)
-
+    
+    # Fix column naming inconsistencies
+    colnames(dat) <- gsub("[ |\\(|\\)]", '.', colnames(dat))
+    
+    rownames(dat) <- paste(dat$Sample.Name, dat$Cell.ID, sep = ':')
+    
     # Only work on tumor cells
-    dat.tumor <- dat %>% filter(`Tissue Category` == tissue_category)
-    rownames(dat.tumor) <- paste(dat.tumor$`Sample Name`, dat.tumor$`Cell ID`, sep = ':')
-
+    dat.tumor <- dat %>% filter(Tissue.Category == tissue_category)
+  
     if (compartment == 'Nucleus'){
         data.for.trajectory <- dat.tumor %>% dplyr::select(matches('Nucleus.*Mean'))
-        colnames(data.for.trajectory) <- sub('^Nucleus (.*?) .*', '\\1', colnames(data.for.trajectory))
+        colnames(data.for.trajectory) <- sub('^Nucleus\\.(.*?)\\..*', '\\1', colnames(data.for.trajectory))
     } else if (compartment == 'Entire.Cell'){
         data.for.trajectory <- dat.tumor %>% dplyr::select(matches('Entire.*Mean'))
-        colnames(data.for.trajectory) <- sub('^Entire Cell (.*?) .*', '\\1', colnames(data.for.trajectory))
+        colnames(data.for.trajectory) <- sub('^Entire\\.Cell\\.(.*?)\\..*', '\\1', colnames(data.for.trajectory))
     } else if (compartment == 'Cytoplasm'){
         data.for.trajectory <- dat.tumor %>% dplyr::select(matches('Cytoplasm.*Mean'))
-        colnames(data.for.trajectory) <- sub('^Cytoplasm (.*?) .*', '\\1', colnames(data.for.trajectory))
+        colnames(data.for.trajectory) <- sub('^Cytoplasm\\.(.*?)\\..*', '\\1', colnames(data.for.trajectory))
     } else {
         stop(paste("Unknown compartment:", compartment))
     }
-
+    
     colnames(data.for.trajectory) <- sub('\\+', '', colnames(data.for.trajectory) )
-
-
+    
+    
     # Drop the unwanted columns
-    data.for.trajectory <- data.for.trajectory %>% dplyr::select(-c('Autofluorescence', excluded_markers))
-
+    data.for.trajectory <- data.for.trajectory %>% dplyr::select(-any_of(c('AF', 'Autofluorescence', excluded_markers)))
+    
     data.for.trajectory
 }
+
