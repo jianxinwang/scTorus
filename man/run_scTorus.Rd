@@ -7,10 +7,11 @@
 run_scTorus(
   x,
   genes.to.highlight = NULL,
-  method = c("lmds", "isoMDS", "CMD"),
+  method = c("lmds", "isoMDS", "CMD", "phate"),
   control.ROIs = NULL,
   treated.ROIs = NULL,
-  smoothFactor = 5
+  smoothFactor = 5,
+  reference.marker = NULL
 )
 }
 \arguments{
